@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\RegisterUserRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AuthController extends Controller
 {
@@ -189,5 +190,19 @@ class AuthController extends Controller
         } catch (Exception $e) {
             return response()->json($e);
         }
+    }
+
+    public function sendWhatsapp(User $user){
+
+    try {
+        $numeroWhatsApp = $user->phone;
+        $urlWhatsApp = "https://api.whatsapp.com/send?phone=$numeroWhatsApp";
+
+        return redirect()->to($urlWhatsApp);
+    } catch (ModelNotFoundException $e) {
+        return redirect()->route('whatsapp');
+    } catch (Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BienController;
+use App\Http\Controllers\DemandeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -28,8 +29,16 @@ Route::delete('biens/{bien}/destroy', [BienController::class, 'destroy']);
 Route::post('biens/{bien}/accepte', [BienController::class, 'acceptBien']);
 Route::post('biens/{bien}/refuse', [BienController::class, 'refuseBien']);
 
-
-
+/*Routes pour demande */
+Route::post('demandes/store', [DemandeController::class, 'store']);
+Route::post('demandes/{demande}/update', [DemandeController::class, 'update']);
+Route::post('demandes/{demande}/show', [DemandeController::class, 'show']);
+Route::get('demandes/index', [DemandeController::class, 'index']);
+Route::post('demandes/{demande}/destroy', [DemandeController::class, 'destroy']);
+Route::post('demandes/{demande}/accept', [DemandeController::class, 'accept']);
+Route::post('demandes/{demande}/refuse', [DemandeController::class, 'refuse']);
+Route::get('demandes/acceptedDemande', [DemandeController::class, 'acceptedDemande']);
+Route::get('demandes/refusedDemande', [DemandeController::class, 'refusedDemande']);
 
 /*routes pour es utilisateurs*/
 
@@ -39,6 +48,7 @@ Route::get('users/index', [AuthController::class, 'index']);
 Route::put('{user}/archive', [AuthController::class, 'archive']);
 Route::get('users/archives', [AuthController::class, 'userArchive']);
 Route::get('users/nonArchives', [AuthController::class, 'userNonArchive']);
+Route::post('users/whatsapp/{user}', [AuthController::class, 'sendWhatsapp'])->name('whatsapp');
 
 
 Route::group([
