@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\BienController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DemandeController;
 use App\Http\Controllers\PubliciteController;
+use App\Http\Controllers\TemoignageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -56,7 +58,19 @@ Route::get('categories/index', [CategorieController::class, 'index']);
 Route::post('categories/{categorie}/update', [CategorieController::class, 'update']);
 Route::delete('categories/{categorie}/destroy', [CategorieController::class,'destroy']);
 
+/*routes pour contact*/
+Route::post('contacts/store', [ContactController::class, 'store']);
+Route::get('contacts/index', [ContactController::class, 'index']);
+Route::get('contacts/{contact}/show', [ContactController::class, 'show']);
+Route::post('contacts/{contact}/update', [ContactController::class, 'update']);
+Route::delete('contacts/{contact}/destroy', [ContactController::class,'destroy']);
 
+/*routes pour temoignage*/
+Route::post('temoignages/store', [TemoignageController::class, 'store']);
+Route::get('temoignages/index', [TemoignageController::class, 'index']);
+Route::get('temoignages/{temoignage}/show', [TemoignageController::class, 'show']);
+Route::post('temoignages/{temoignage}/accept', [TemoignageController::class, 'accept']);
+// Route::delete('temoignages/{contact}/destroy', [TemoignageController::class,'destroy']);
 
 
 /*routes pour les utilisateurs*/
