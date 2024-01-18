@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Demande;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('publicites', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('media');
-            $table->boolean('isValide')->default(1);
-            $table->foreignIdFor(Demande::class)->constrained()->onDelete('cascade');
+            $table->string('nom');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('publicites');
+        Schema::dropIfExists('categories');
     }
 };

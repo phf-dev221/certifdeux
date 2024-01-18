@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Publicite extends Model
+class Categorie extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
-        'isValide',
-        'media',
-        'demande_id'
+    protected $fillable = [
+        'nom'
     ];
 }

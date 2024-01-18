@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\BienController;
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\DemandeController;
+use App\Http\Controllers\PubliciteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -34,13 +36,30 @@ Route::post('demandes/store', [DemandeController::class, 'store']);
 Route::post('demandes/{demande}/update', [DemandeController::class, 'update']);
 Route::post('demandes/{demande}/show', [DemandeController::class, 'show']);
 Route::get('demandes/index', [DemandeController::class, 'index']);
-Route::post('demandes/{demande}/destroy', [DemandeController::class, 'destroy']);
+Route::delete('demandes/{demande}/destroy', [DemandeController::class, 'destroy']);
 Route::post('demandes/{demande}/accept', [DemandeController::class, 'accept']);
 Route::post('demandes/{demande}/refuse', [DemandeController::class, 'refuse']);
 Route::get('demandes/acceptedDemande', [DemandeController::class, 'acceptedDemande']);
 Route::get('demandes/refusedDemande', [DemandeController::class, 'refusedDemande']);
 
-/*routes pour es utilisateurs*/
+/*routes pour pub */
+Route::post('pubs/store', [PubliciteController::class, 'store']);
+Route::get('pubs/index', [PubliciteController::class, 'index']);
+Route::get('pubs/{publicite}/show', [PubliciteController::class, 'show']);
+Route::post('pubs/{publicite}/update', [PubliciteController::class, 'update']);
+Route::post('pubs/{publicite}/destroy', [PubliciteController::class, 'destroy']);
+Route::post('pubs/{publicite}/invalide', [PubliciteController::class, 'invalidPub']);
+
+/*routes pour les categories*/
+Route::post('categories/store', [CategorieController::class, 'store']);
+Route::get('categories/index', [CategorieController::class, 'index']);
+Route::post('categories/{categorie}/update', [CategorieController::class, 'update']);
+Route::delete('categories/{categorie}/destroy', [CategorieController::class,'destroy']);
+
+
+
+
+/*routes pour les utilisateurs*/
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('users/{user}/update', [AuthController::class, 'update']);

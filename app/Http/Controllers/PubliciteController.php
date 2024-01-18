@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Publicite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PubliciteController extends Controller
 {
@@ -12,7 +14,21 @@ class PubliciteController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $publicites = Publicite::where('isvalide', 1);
+
+            return response()->json([
+                'status_code' => 200,
+                'status_message' => 'Liste des publicités',
+                'publicites' => $publicites,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'status_code' => 500,
+                'status_message' => 'Erreur lors de la récupération des publicités',
+            ]);
+        }
     }
 
     /**
@@ -28,7 +44,30 @@ class PubliciteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $pub = new Publicite();
+
+            $pub->media = $this->storeImage($request->media);
+            $pub->demande_id = $request->demande_id;
+            $pub->save();
+
+            return response()->json([
+                'status_code' => 201,
+                'status_message' => 'pub enregistré',
+                'bien' => $pub,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'status_code' => 500,
+                'status_message' => 'Erreur lors de l\'ajout du bien',
+            ]);
+        }
+    }
+
+    private function storeImage($image)
+    {
+        return $image->store('imagePub', 'public');
     }
 
     /**
@@ -36,8 +75,43 @@ class PubliciteController extends Controller
      */
     public function show(Publicite $publicite)
     {
-        //
+        try {
+            return response()->json([
+                'status_code' => 200,
+                'status_message' => 'Publicité trouvée',
+                'publicite' => $publicite,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'status_code' => 404,
+                'status_message' => 'Publicité non trouvée',
+            ]);
+        }
     }
+
+    public function invalidPub(Publicite $publicite)
+    {
+        try {
+            $publicite->update([
+                'isValide' => 0
+            ]);
+            $publicite->save();
+
+            return response()->json([
+                'status_code' => 200,
+                'status_message' => 'Publicité marquée comme invalide avec succès',
+                'publicite' => $publicite,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'status_code' => 500,
+                'status_message' => 'Erreur lors du marquage de la publicité comme invalide',
+            ]);
+        }
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -52,7 +126,25 @@ class PubliciteController extends Controller
      */
     public function update(Request $request, Publicite $publicite)
     {
-        //
+        try {
+
+            if ($request->hasFile('media')) {
+                Storage::delete($publicite->media);
+            }
+
+            $publicite->update([
+                'media' => $request->hasFile('media') ? $this->storeImage($request->file('media')) : $publicite->media,
+                'demande_id' => $request->input('demande_id', $publicite->demande_id),
+            ]);
+
+            return response()->json([
+                'status_code' => 200,
+                'status_message' => 'Publicité mise à jour avec succès',
+                'publicite' => $publicite,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -60,6 +152,19 @@ class PubliciteController extends Controller
      */
     public function destroy(Publicite $publicite)
     {
-        //
+        try {
+            $publicite->delete();
+
+            return response()->json([
+                'status_code' => 200,
+                'status_message' => 'Publicité supprimée avec succès',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'status_code' => 500,
+                'status_message' => 'Erreur lors de la suppression de la publicité',
+            ]);
+        }
     }
 }
