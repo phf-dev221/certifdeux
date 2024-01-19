@@ -42,7 +42,6 @@ class RegisterUserRequest extends FormRequest
             'errorList'=>$validator->errors()
         ]));
     }
-
     public function messages(){
         return [
             'name.required'=>'le nom est requis',
@@ -62,4 +61,6 @@ class RegisterUserRequest extends FormRequest
 
         ];
     }
+
+    
 }

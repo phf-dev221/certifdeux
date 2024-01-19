@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Bien;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateBienRequest;
+use App\Http\Requests\RegisterBienRequest;
+
 
 class BienController extends Controller
 {
@@ -42,7 +45,7 @@ class BienController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request)
+    public function store(RegisterBienRequest $request)
     {
         try {
             $bien = new Bien();
@@ -106,7 +109,7 @@ class BienController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Bien $bien)
+    public function update(UpdateBienRequest $request, Bien $bien)
     {   
         // try {
             

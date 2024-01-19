@@ -133,6 +133,15 @@ class AuthController extends Controller
         }
     }
 
+    public function show(User $user){
+        
+        return response()->json([
+            'status_code' => 200,
+            'status_message' => 'Informations utilisateur recupérées avec succès',
+            'user' => $user,
+        ]);
+    }
+
     public function update(UpdateUserRequest $request, User $user)
     {
         try {

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateContactRequest;
+use App\Http\Requests\RegisterContactRequest;
+
 
 class ContactController extends Controller
 {
@@ -34,7 +37,7 @@ class ContactController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RegisterContactRequest $request)
     {
         $contact = new Contact();
         $contact->nom = $request->nom;
@@ -73,7 +76,7 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Contact $contact)
+    public function update(UpdateContactRequest $request, Contact $contact)
     {
         try {
             $contact->update($request->only(['nom','email','message']));

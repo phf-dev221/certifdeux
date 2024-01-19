@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterCategorieRequest;
+use App\Http\Requests\UpdateCategorieRequest;
 use Exception;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
@@ -33,7 +35,7 @@ class CategorieController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RegisterCategorieRequest $request)
     {
         $categorie = new Categorie();
 
@@ -64,7 +66,7 @@ class CategorieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categorie $categorie)
+    public function update(UpdateCategorieRequest $request, Categorie $categorie)
     {
         try {
             $categorie->update($request->only(['nom']));

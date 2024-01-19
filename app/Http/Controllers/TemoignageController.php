@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegistertemoignageRequest;
 use Exception;
 use App\Models\Temoignage;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ class TemoignageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RegistertemoignageRequest $request)
     {
         $temoignage = new Temoignage();
         $temoignage->contenu = $request->contenu;
@@ -64,7 +65,7 @@ class TemoignageController extends Controller
         try {
             $temoignage->isAccepted = true;
             $temoignage->save();
-            
+
             return response()->json([
                 'status_code' => 200,
                 'status_message' => "Vous avez accepté ce temoignage"

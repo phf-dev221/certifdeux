@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterDemandeRequest;
+use App\Http\Requests\UpdateDemandeRequest;
 use Exception;
 use App\Models\Demande;
 use Illuminate\Http\Request;
@@ -112,7 +114,7 @@ class DemandeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RegisterDemandeRequest $request)
     {
         try {
             $demande = new Demande();
@@ -170,7 +172,7 @@ class DemandeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Demande $demande)
+    public function update(UpdateDemandeRequest $request, Demande $demande)
     {
         try {
             $demande->update($request->only(['duree', 'details', 'email']));

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterPubliciteRequest;
+use App\Http\Requests\UpdatePubliciteRequest;
 use Exception;
 use App\Models\Publicite;
 use Illuminate\Http\Request;
@@ -42,7 +44,7 @@ class PubliciteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RegisterPubliciteRequest $request)
     {
         try {
             $pub = new Publicite();
@@ -124,7 +126,7 @@ class PubliciteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Publicite $publicite)
+    public function update(UpdatePubliciteRequest $request, Publicite $publicite)
     {
         try {
 
