@@ -56,6 +56,7 @@ class SouscrisController extends Controller
             Mail::to($user->email)->send(new News($data));
 
     }
+    return view('newsletter',compact('data'));
 }
     
 
