@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('product_name');
+            // $table->string('product_name');
             $table->string('token')->unique()->nullable();
             $table->integer('amount');
             $table->integer('qty');

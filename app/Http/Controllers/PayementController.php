@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\PaytechService;
@@ -30,7 +31,8 @@ class PayementController extends Controller
 
 
         // $amount = $validated['price'] * $validated['qty'];
-        $amount = $request['price'] * $request['qty'];
+        // $amount = $request['price'] * $request['qty'];
+        $amount = $request['price'];
         $code = "47"; // This can be the product id
 
         /*
@@ -44,12 +46,13 @@ class PayementController extends Controller
 
 
         $jsonResponse = $paymentService->setQuery([
-            'item_name' => $request['product_name'],
+            // 'item_name' => $request['product_name'],
             'item_price' => $amount,
-            'command_name' => "Paiement pour l'achat de " . $request['product_name'] . " via PayTech",
+            // 'command_name' => "Paiement pour l'achat de " . $request['product_name'] . " via PayTech",
+            'command_name' => "Paiement pour l'achat  via PayTech",
         ])
             ->setCustomeField([
-                'item_id' => $request['product_name'], // You can change it by the product id
+                //'item_id' => $request['product_name'],  You can change it by the product id
                 'time_command' => time(),
                 'ip_user' => $_SERVER['REMOTE_ADDR'],
                 'lang' => $_SERVER['HTTP_ACCEPT_LANGUAGE']
@@ -62,9 +65,9 @@ class PayementController extends Controller
                 'success_url' => $success_url,
                 'cancel_url' => $cancel_url
             ])->send();
-        // dd($request->all());
+            ($request->all());
 
-
+// dd($jsonResponse);
         if ($jsonResponse['success'] < 0) {
             return back()->withErrors($jsonResponse['errors'][0]);
         } elseif ($jsonResponse['success'] == 1) {
@@ -89,43 +92,43 @@ class PayementController extends Controller
         return Redirect::to(route('payment.success.view', ['code' => $code]));
     }
 
-    public function savePayment($data = [])
-    {
+    // public function savePayment($data = [])
+    // {
 
-        # save payment database
+    //     # save payment database
 
-        /* $payment = Payment::firstOrCreate([
-            'token' => $data['token'],
-        ], [
-            'user_id' => auth()->user()->id,
-            'product_name' => $data['product_name'],
-            'amount' => $data['price'],
-            'qty' => $data['qty']
-        ]);
+    //      $payment = Payment::firstOrCreate([
+    //         'token' => $data['token'],
+    //     ], [
+    //         'user_id' => auth()->user()->id,
+    //         // 'product_name' => $data['product_name'],
+    //         'amount' => $data['price'],
+    //         'qty' => $data['qty']
+    //     ]);
 
-        if (!$payment) {
-            # redirect to home page if payment not saved
-            return $response = [
-                'success' => false,
-                'data' => $data
-            ];
-        } */
+    //     if (!$payment) {
+    //         # redirect to home page if payment not saved
+    //         return $response = [
+    //             'success' => false,
+    //             'data' => $data
+    //         ];
+    //     } 
 
 
-        # Redirect to Success page if payment success
+    //     # Redirect to Success page if payment success
 
-        // $data['payment_id'] = $payment->id;
+    //     $data['payment_id'] = $payment->id;
 
-        /*
-            You can continu to save onother records to database using Eloquant methods
-            Exemple: Transaction::create($data);
-        */
+    //     /*
+    //         You can continu to save onother records to database using Eloquant methods
+    //         Exemple: Transaction::create($data);
+    //     */
 
-        return $response = [
-            'success' => true, //
-            'data' => $data
-        ];
-    }
+    //     return $response = [
+    //         'success' => true, //
+    //         'data' => $data
+    //     ];
+    // }
 
     public function paymentSuccessView(Request $request, $code)
     {

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\User;
+use App\Mail\PayeMail;
 use App\Models\Demande;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class DemandeController extends Controller
 {
@@ -32,15 +35,18 @@ class DemandeController extends Controller
 
     public function accept(Demande $demande)
     {
+        $user = User::where('id',$demande->user_id)->first();
+        $numero = $demande->id;
         try {
             $demande->update([
                 'etat' => 'accepte'
             ]);
-            $demande->save();
-            return response()->json([
-                'status_code' => 200,
-                'status_message' => "Vous avez accepté cette demande"
-            ]);
+            
+            if($demande->save()){
+                Mail::to($user->email)->send(new PayeMail($numero));   
+            };
+            return view('payement',compact('numero'));
+
         } catch (Exception $e) {
             return response()->json($e);
         }
