@@ -37,19 +37,19 @@ class DemandeController extends Controller
     {
         $user = User::where('id',$demande->user_id)->first();
         $numero = $demande->id;
-        try {
+        // try {
             $demande->update([
                 'etat' => 'accepte'
             ]);
             
-            if($demande->save()){
-                Mail::to($user->email)->send(new PayeMail($numero));   
-            };
+            $demande->save();
+            // };
             return view('payement',compact('numero'));
+            Mail::to($user->email)->send(new PayeMail());   
 
-        } catch (Exception $e) {
-            return response()->json($e);
-        }
+        // } catch (Exception $e) {
+        //     return response()->json($e);
+        // }
     }
 
     public function refuse(Demande $demande)

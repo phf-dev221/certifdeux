@@ -16,10 +16,10 @@ class PayeMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public $data ;
-    public function __construct($numero)
+ 
+    public function __construct()
     {
-        $this->data = $numero;
+        //
     }
 
     /**
