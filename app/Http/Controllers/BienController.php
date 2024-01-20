@@ -54,8 +54,18 @@ class BienController extends Controller
             $bien->description = $request->description;
             $bien->date = $request->date;
             $bien->lieu = $request->lieu;
-            $bien->image = $this->storeImage($request->image);
             $bien->user_id = auth()->user()->id;
+            // $bien->image = $this->storeImage($request->image);
+            // $bien->save();
+            $bien->image = $request->image;
+            // dd($bien);
+                $imageNames = [];
+            foreach ($request->image as $value){
+                $imageName = time().'_'.$value->getClientOriginalName();
+                $value-> move(public_path('/imagesBiens'), $imageName);
+                $imageNames[] = $imageName;
+            }
+            $bien->image = json_encode($imageNames);
             $bien->save();
     
             return response()->json([

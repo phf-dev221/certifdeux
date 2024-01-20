@@ -19,4 +19,9 @@ class Bien extends Model
         'user_id'
     ];
 
+    public function categorie()
+    {
+        return $this->belongsToMany(Categorie::class, 'roles_id');
+    }
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Categorie;
 use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->date('date');
             $table->enum('statut',['en attente', 'accepte', 'refuse'])->default('en attente');
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Categorie::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
