@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\PaytechService;
@@ -105,6 +105,7 @@ class PayementController extends Controller
     //         'amount' => $data['price'],
     //         'qty' => $data['qty']
     //     ]);
+        
 
     //     if (!$payment) {
     //         # redirect to home page if payment not saved
@@ -119,10 +120,10 @@ class PayementController extends Controller
 
     //     $data['payment_id'] = $payment->id;
 
-    //     /*
-    //         You can continu to save onother records to database using Eloquant methods
-    //         Exemple: Transaction::create($data);
-    //     */
+        
+    //         // You can continu to save onother records to database using Eloquant methods
+    //         // Exemple: Transaction::create($data);
+        
 
     //     return $response = [
     //         'success' => true, //

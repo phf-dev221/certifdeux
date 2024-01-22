@@ -6,7 +6,6 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DemandeController;
 use App\Http\Controllers\PubliciteController;
 use App\Http\Controllers\TemoignageController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -21,9 +20,6 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 /*routes pour les biens trouves*/
 Route::post('biens/store', [BienController::class, 'store']);
 Route::get('biens/index', [BienController::class, 'index']);
