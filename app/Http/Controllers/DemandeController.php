@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterDemandeRequest;
-use App\Http\Requests\UpdateDemandeRequest;
 use Exception;
+use App\Models\User;
 use App\Models\Demande;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateDemandeRequest;
+use App\Http\Requests\RegisterDemandeRequest;
 
 class DemandeController extends Controller
 {
@@ -38,7 +39,7 @@ class DemandeController extends Controller
             $demande->update([
                 'etat' => 'accepte'
             ]);
-            $demande->save();
+
             return response()->json([
                 'status_code' => 200,
                 'status_message' => "Vous avez accepté cette demande"
