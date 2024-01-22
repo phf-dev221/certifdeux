@@ -66,7 +66,7 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
 });
 
 /*routes pour biens*/
-Route::get('biens/index', [BienController::class, 'index']);
+Route::get('biens/index/{categorie}', [BienController::class, 'index']);
 Route::get('biens/{bien}/show', [BienController::class, 'show']);
 Route::post('biens/{bien}/update', [BienController::class, 'update']);
 

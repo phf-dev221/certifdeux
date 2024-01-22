@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use Exception;
 use App\Models\Bien;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateBienRequest;
 use App\Http\Requests\RegisterBienRequest;
@@ -14,21 +16,32 @@ class BienController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Categorie $categorie)
     {
         try {
-            $biens = Bien::where('statut', 'accepte')->get();
-
+            $biens = Bien::where('statut', 'accepte')
+            ->where('categorie_id',$categorie->id)
+            ->get();
+            $result = [];
+            foreach ($biens as $bien) {
+                $firstimage = Image::where('bien_id', $bien->id)->first();
+                    $result[] = [
+                    'bien' => $bien,
+                    'premiere_image' => $firstimage,
+                ];
+            }
+    
             return response()->json([
                 'status_code' => 200,
-                'status_message' => 'Liste des biens récupérée avec succès',
-                'biens' => $biens,
+                'status_message' => 'Biens acceptés avec leur première image récupérés avec succès',
+                'data' => $result,
             ]);
+    
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
                 'status_code' => 500,
-                'status_message' => 'Erreur lors de la récupération des biens',
+                'status_message' => 'Erreur lors de la récupération des biens acceptés',
             ]);
         }
     }
@@ -45,43 +58,52 @@ class BienController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(RegisterBienRequest $request)
+    public function store(Request $request)
     {
         try {
             $bien = new Bien();
-            
+
             $bien->libelle = $request->libelle;
             $bien->description = $request->description;
             $bien->date = $request->date;
             $bien->lieu = $request->lieu;
             $bien->user_id = auth()->user()->id;
-            // $bien->image = $this->storeImage($request->image);
-            // $bien->save();
-            $bien->image = $request->image;
-            // dd($bien);
-                $imageNames = [];
-            foreach ($request->image as $value){
-                $imageName = time().'_'.$value->getClientOriginalName();
-                $value-> move(public_path('/imagesBiens'), $imageName);
-                $imageNames[] = $imageName;
-            }
-            $bien->image = json_encode($imageNames);
+            $bien->categorie_id = $request->categorie_id;
             $bien->save();
-    
-            return response()->json([
-                'status_code' => 201,
-                'status_message' => 'Bien trouvé ajouté avec succès',
-                'bien' => $bien,
-            ]);
+            $imagesData = [];
+
+            foreach ($request->file('image') as $file) {
+                $images = new Image();
+                $imagePath = $file->store('images', 'public');
+                $images->image = $imagePath;
+                $images->bien_id = $bien->id;
+                $images->save();
+                
+                $imagesData[] = $images;
+            }
+            if(count($imagesData) > 0){
+                return response()->json([
+                    'message' => "Bien enregistré avec succès",
+                    'bien' => $bien,
+                    'images' => $imagesData,
+                ]);
+            } else {
+                return response()->json([
+                    'status_code' => 500,
+                    'status_message' => 'Erreur lors de l\'ajout des images du bien',
+                ]);
+            }
+
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
                 'status_code' => 500,
                 'status_message' => 'Erreur lors de l\'ajout du bien',
+                'image'=>$imagesData
             ]);
         }
     }
-    
+
     private function storeImage($image)
     {
         return $image->store('imageBien', 'public');
@@ -92,12 +114,14 @@ class BienController extends Controller
      */
     public function show(Bien $bien)
     {
+        $images = Image::where('bien_id',$bien->id)->get();
         try {
 
             return response()->json([
                 'status_code' => 200,
                 'status_message' => 'Bien récupéré avec succès',
                 'bien' => $bien,
+                'images'=>$images
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -120,23 +144,23 @@ class BienController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdateBienRequest $request, Bien $bien)
-    {   
+    {
         // try {
-            
-            $bien->libelle = $request->libelle;
-            $bien->description = $request->description;
-            $bien->date = $request->date;
-            $bien->lieu = $request->lieu;
-            if ($request->hasFile("image")) {
-                $bien->image = $this->storeImage($request->image);
-            }           
-             $bien->save();
 
-            return response()->json([
-                'status_code' => 200,
-                'status_message' => 'Bien mis à jour avec succès',
-                'bien' => $bien,
-            ]);
+        $bien->libelle = $request->libelle;
+        $bien->description = $request->description;
+        $bien->date = $request->date;
+        $bien->lieu = $request->lieu;
+        if ($request->hasFile("image")) {
+            $bien->image = $this->storeImage($request->image);
+        }
+        $bien->save();
+
+        return response()->json([
+            'status_code' => 200,
+            'status_message' => 'Bien mis à jour avec succès',
+            'bien' => $bien,
+        ]);
         // } catch (Exception $e) {
         //     return response()->json([
         //         'error' => $e->getMessage(),
@@ -168,21 +192,23 @@ class BienController extends Controller
         }
     }
 
-    public function acceptBien(Bien $bien){
+    public function acceptBien(Bien $bien)
+    {
         $bien->statut = 'accepte';
         $bien->update();
         return response()->json([
-            'status code'=>200,
-            'status message'=>"Le bien a été validé",
+            'status code' => 200,
+            'status message' => "Le bien a été validé",
         ]);
     }
 
-    public function refuseBien(Bien $bien){
+    public function refuseBien(Bien $bien)
+    {
         $bien->statut = 'refuse';
         $bien->update();
         return response()->json([
-            'status code'=>200,
-            'status message'=>"Le bien a été refusé",
+            'status code' => 200,
+            'status message' => "Le bien a été refusé",
         ]);
     }
 }

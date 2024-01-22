@@ -13,7 +13,6 @@ class Bien extends Model
         'libelle',
         'lieu',
         'description',
-        'image',
         'date',
         'statut',
         'user_id'

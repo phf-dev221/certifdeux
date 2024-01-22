@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('libelle');
             $table->string('lieu');
             $table->longText('description');
-            $table->string('image');
             $table->date('date');
             $table->enum('statut',['en attente', 'accepte', 'refuse'])->default('en attente');
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
