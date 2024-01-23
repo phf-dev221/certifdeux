@@ -55,7 +55,8 @@ class ForgotPasswordController extends Controller
      */
     public function showResetPasswordForm($token)
     {
-        return view('resetPassword', ['token' => $token]);    }
+        return view('resetPassword', ['token' => $token]);
+    }
 
     /**
      * Submit the reset password form.
@@ -66,7 +67,7 @@ class ForgotPasswordController extends Controller
     public function submitResetPasswordForm(Request $request)
     {
         $request->validate([
-            'password'=>'required|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(.{8,})$/',
+            'password' => 'required|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(.{8,})$/',
             'password_confirmation' => 'required|regex:/^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=!])(.{8,})$/',
         ]);
 
@@ -80,14 +81,13 @@ class ForgotPasswordController extends Controller
         if (!$updatePassword) {
             return response()->json(['error' => 'données invalides!'], 422);
         }
-        
-        $user= DB::table('password_reset_tokens')->where(['token' => $request->token])->first();
 
-       User::where('email', $user->email)
+        $user = DB::table('password_reset_tokens')->where(['token' => $request->token])->first();
+
+        User::where('email', $user->email)
             ->update(['password' => Hash::make($request->password)]);
 
-        DB::table('password_reset_tokens')->where(['token' => $request->token])->delete();
-
+        $updatePassword->delete();
         return response()->json(['message' => 'Votre mot de passe a été mis a jour']);
     }
 }

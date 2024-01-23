@@ -25,31 +25,33 @@ class UpdateBienRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'libelle'=>'required|string',
-            'description'=>'required|string',
-            'date'=>'required|date',
-            'lieu'=>'required|regex:/string',
-            'image'=>'required|image|max:5000'
+            'libelle' => 'string',
+            'description' => 'string',
+            'date' => 'date',
+            'lieu' => 'regex:/string',
+            'image[]' => 'image|max:10000|mimes:jpeg,png,jpg',
         ];
     }
 
-    public function failedValidation(validator $validator ){
+    public function failedValidation(validator $validator)
+    {
         throw new HttpResponseException(response()->json([
-            'success'=>false,
-            'status_code'=>422,
-            'error'=>true,
-            'message'=>'erreur de validation',
-            'errorList'=>$validator->errors()
+            'success' => false,
+            'status_code' => 422,
+            'error' => true,
+            'message' => 'erreur de validation',
+            'errorList' => $validator->errors()
         ]));
     }
-    public function messages(){
+    public function messages()
+    {
         return [
-            'libelle.string'=>'Format du libellé incorrect',
-            'description.string'=>'la description a un format incorrect',
-            'date.date'=>'Format date incorrect',
-            'lieu.string'=>'Format lieu incorrect',
-            'image.image'=>"le format de l'image est incorrect",
-            'image.max'=>'la taille de l\'image est trop grande'
+            'libelle.string' => 'Format du libellé incorrect',
+            'description.string' => 'la description a un format incorrect',
+            'date.date' => 'Format date incorrect',
+            'lieu.string' => 'Format lieu incorrect',
+            'image.image' => "le format de l'image est incorrect",
+            'image.max' => 'la taille de l\'image est trop grande'
 
         ];
     }

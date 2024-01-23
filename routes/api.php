@@ -13,17 +13,6 @@ use App\Http\Controllers\PubliciteController;
 use App\Http\Controllers\TemoignageController;
 use App\Http\Controllers\ForgotPasswordController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
 /*routes pour l'administrateurs seulement*/
 
 Route::middleware(['auth:api', 'admin'])->group(function () {
@@ -39,6 +28,7 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('demandes/{demande}/refuse', [DemandeController::class, 'refuse']);
     Route::get('demandes/acceptedDemande', [DemandeController::class, 'acceptedDemande']);
     Route::get('demandes/refusedDemande', [DemandeController::class, 'refusedDemande']);
+    Route::get('demandes/index', [DemandeController::class, 'index']);
 
     /*publicités*/
     Route::post('pubs/{publicite}/update', [PubliciteController::class, 'update']);
@@ -50,6 +40,7 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('categories/{categorie}/update', [CategorieController::class, 'update']);
     Route::delete('categories/{categorie}/destroy', [CategorieController::class, 'destroy']);
     Route::post('categories/store', [CategorieController::class, 'store']);
+    Route::get('categories/index', [CategorieController::class, 'index']);
 
     /*contacts*/
     Route::get('contacts/index', [ContactController::class, 'index']);
@@ -64,38 +55,45 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::get('users/archives', [AuthController::class, 'userArchive']);
     Route::get('users/nonArchives', [AuthController::class, 'userNonArchive']);
 
+    Route::post('news', [SouscrisController::class, 'newsletter']);
+});
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('biens/{bien}/update', [BienController::class, 'update']);
+    Route::get('biens/bienUser', [BienController::class, 'bienUser']);
+    Route::post('biens/{bien}/rendreBien', [BienController::class, 'rendreBien']);
+
+    Route::post('demandes/store', [DemandeController::class, 'store']);
+    Route::post('demandes/{demande}/update', [DemandeController::class, 'update']);
+    Route::post('demandes/{demande}/show', [DemandeController::class, 'show']);
+    Route::delete('demandes/{demande}/destroy', [DemandeController::class, 'destroy']);
+
+    Route::post('contacts/store', [ContactController::class, 'store']);
+
+    Route::post('temoignages/store', [TemoignageController::class, 'store']);
+
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::post('me', [AuthController::class, 'me']);
+    Route::post('users/{user}/update', [AuthController::class, 'update']);
+    Route::get('users/{user}/show', [AuthController::class, 'show']);
+    Route::post('users/whatsapp/{user}', [AuthController::class, 'sendWhatsapp'])->name('whatsapp');
+    Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 });
 
 /*routes pour biens*/
 Route::get('biens/index/{categorie}', [BienController::class, 'index']);
 Route::get('biens/{bien}/show', [BienController::class, 'show']);
-Route::post('biens/{bien}/update', [BienController::class, 'update']);
-
-
-/*Routes pour demande */
-Route::post('demandes/store', [DemandeController::class, 'store']);
-Route::post('demandes/{demande}/update', [DemandeController::class, 'update']);
-Route::post('demandes/{demande}/show', [DemandeController::class, 'show']);
-Route::get('demandes/index', [DemandeController::class, 'index']);
-Route::delete('demandes/{demande}/destroy', [DemandeController::class, 'destroy']);
-
 
 /*routes pour pub */
 Route::get('pubs/index', [PubliciteController::class, 'index']);
 Route::get('pubs/{publicite}/show', [PubliciteController::class, 'show']);
 
-
-/*routes pour les categories*/
-Route::get('categories/index', [CategorieController::class, 'index']);
-
-
 /*routes pour contact*/
-Route::post('contacts/store', [ContactController::class, 'store']);
-Route::post('contacts/{contact}/update', [ContactController::class, 'update']);
-Route::delete('contacts/{contact}/destroy', [ContactController::class, 'destroy']);
+// Route::post('contacts/{contact}/update', [ContactController::class, 'update']);
+// Route::delete('contacts/{contact}/destroy', [ContactController::class, 'destroy']);
 
 /*routes pour temoignage*/
-Route::post('temoignages/store', [TemoignageController::class, 'store']);
 Route::get('temoignages/index', [TemoignageController::class, 'index']);
 Route::get('temoignages/{temoignage}/show', [TemoignageController::class, 'show']);
 
@@ -103,24 +101,16 @@ Route::get('temoignages/{temoignage}/show', [TemoignageController::class, 'show'
 Route::post('roles/store', [RoleController::class, 'store']);
 Route::post('roles/{role}/update', [RoleController::class, 'update']);
 
-
 /*routes pour les utilisateurs*/
 Route::post('register', [AuthController::class, 'register']);
-Route::post('users/{user}/update', [AuthController::class, 'update']);
-Route::get('users/{user}/show', [AuthController::class, 'show']);
-Route::post('users/whatsapp/{user}', [AuthController::class, 'sendWhatsapp'])->name('whatsapp');
 Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::post('logout', [AuthController::class, 'logout']);
-Route::post('refresh', [AuthController::class, 'refresh']);
-Route::post('me', [AuthController::class, 'me']);
+
 
 /*newsletter*/
-Route::post('news', [SouscrisController::class, 'newsletter']);
 Route::post('news/store', [SouscrisController::class, 'store']);
 
 /*reset password*/
 // Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
-Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 

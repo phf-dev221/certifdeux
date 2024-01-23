@@ -1,10 +1,40 @@
 <?php
 
+/**
+ * @OA\Security(
+ *     security={
+ *         "BearerAuth": {}
+ *     },
+ */
+
+
+/**
+ * @OA\SecurityScheme(
+ *     securityScheme="BearerAuth",
+ *     type="http",
+ *     scheme="bearer",
+ *     bearerFormat="JWT"
+ */
+
+
+/**
+ * @OA\Info(
+ *     title="Your API Title",
+ *     description="Your API Description",
+ *     version="1.0.0"
+ */
+
+
+/**
+ * @OA\Consumes({
+ *     "application/json"
+ * })
+ */
 
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/news/store",
+ *     path="/api/news/store",
  *     summary="Souscris a un newslatter",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -26,7 +56,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/news",
+ *     path="/api/news",
  *     summary="Creer un newsletter",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -84,7 +114,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/demandes/2/destroy",
+ *     path="/api/demandes/2/destroy",
  *     summary="supprimer une demande",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -97,7 +127,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/demandes/3/refuse",
+ *     path="/api/demandes/3/refuse",
  *     summary="Refuser une demande",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -110,7 +140,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/demandes/1/accept",
+ *     path="/api/demandes/5/accept",
  *     summary="Accepter une demande",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -123,7 +153,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/demandes/refusedDemande",
+ *     path="/api/demandes/refusedDemande",
  *     summary="demandes refusées",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -136,7 +166,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/demandes/acceptedDemande",
+ *     path="/api/demandes/acceptedDemande",
  *     summary="demandes acceptées",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -149,7 +179,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/demandes/index",
+ *     path="/api/demandes/index",
  *     summary="demandes en attente",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -162,7 +192,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/demandes/1/update",
+ *     path="/api/demandes/1/update",
  *     summary="Modifier une demande",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -182,7 +212,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/demandes/store",
+ *     path="/api/demandes/store",
  *     summary="creer une demande",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -194,7 +224,7 @@
  *             example=
   * {
  *     "duree": 1,
- *     "details": "fgyhzgf hkbhrf",
+ *     "details": "details",
  *     "email": "pro@gmail.com"
  * }
  *         )
@@ -206,7 +236,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/categories/store",
+ *     path="/api/categories/store",
  *     summary="Creer une categorie",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -217,7 +247,7 @@
  *         @OA\JsonContent(
  *             example=
   * {
- *     "nom": "animal"
+ *     "nom": "argent"
  * }
  *         )
  *     ),
@@ -228,7 +258,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/categories/index",
+ *     path="/api/categories/index",
  *     summary="Liste des categories",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -241,7 +271,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/categories/1/update",
+ *     path="/api/categories/1/update",
  *     summary="Modifier une categorie",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -263,7 +293,7 @@
 
 /**
  * @OA\DELETE(
- *     path="http://localhost:8000/api/categories/1/destroy",
+ *     path="/api/categories/1/destroy",
  *     summary="Supprimer une categorie",
  *     description="",
  * @OA\Response(response="204", description="Deleted successfully")
@@ -276,7 +306,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/temoignages/store",
+ *     path="/api/temoignages/store",
  *     summary="Enregistrer témoignage",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -298,7 +328,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/temoignages/index",
+ *     path="/api/temoignages/index",
  *     summary="Voir tous les temoignages",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -311,7 +341,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/temoignages/1/show",
+ *     path="/api/temoignages/1/show",
  *     summary="Voir un témoignage",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -324,7 +354,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/temoignages/1/accept",
+ *     path="/api/temoignages/1/accept",
  *     summary="Accepter un témoignage",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -337,7 +367,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/contacts/index",
+ *     path="/api/contacts/index",
  *     summary="Liste des contacts",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -350,7 +380,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/contacts/store",
+ *     path="/api/contacts/store",
  *     summary="Enregistré contact",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -374,7 +404,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/contacts/1/update",
+ *     path="/api/contacts/1/update",
  *     summary="Modifier contact",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -396,7 +426,7 @@
 
 /**
  * @OA\DELETE(
- *     path="http://localhost:8000/api/contacts/1/destroy",
+ *     path="/api/contacts/1/destroy",
  *     summary="Supprimer un contact",
  *     description="",
  * @OA\Response(response="204", description="Deleted successfully")
@@ -409,7 +439,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/contacts/1/show",
+ *     path="/api/contacts/1/show",
  *     summary="voir un contact",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -422,7 +452,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/pubs/1/invalide",
+ *     path="/api/pubs/1/invalide",
  *     summary="invalider une publicité",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -435,7 +465,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/pubs/1/show",
+ *     path="/api/pubs/1/show",
  *     summary="voir une publicité",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -448,7 +478,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/pubs/index",
+ *     path="/api/pubs/index",
  *     summary="liste des publicités",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -461,7 +491,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/pubs/store",
+ *     path="/api/pubs/store",
  *     summary="Creer une publicité",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -474,7 +504,33 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/biens/1/refuse",
+ *     path="/api/biens/22/rendreBien",
+ *     summary="Mettre un bien comme rendu",
+ *     description="",
+ * @OA\Response(response="201", description="Created successfully")
+ *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
+ * )
+ *     tags={"Biens"},
+ * )
+ */
+
+
+/**
+ * @OA\GET(
+ *     path="/api/biens/bienUser",
+ *     summary="Biens d'un utilisateur",
+ *     description="",
+ * @OA\Response(response="200", description="OK")
+ *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
+ * )
+ *     tags={"Biens"},
+ * )
+ */
+
+
+/**
+ * @OA\POST(
+ *     path="/api/biens/1/refuse",
  *     summary="Refuser un bien",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -487,7 +543,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/biens/1/accepte",
+ *     path="/api/biens/1/accepte",
  *     summary="Accepter un bien",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -500,7 +556,7 @@
 
 /**
  * @OA\DELETE(
- *     path="http://localhost:8000/api/biens/1/destroy",
+ *     path="/api/biens/1/destroy",
  *     summary="Supprimer un bien",
  *     description="",
  * @OA\Response(response="204", description="Deleted successfully")
@@ -513,7 +569,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/biens/1/update",
+ *     path="/api/biens/25/update",
  *     summary="Modifier un bien",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -526,7 +582,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/biens/1/show",
+ *     path="/api/biens/2/show",
  *     summary="récupérer un bien",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -539,7 +595,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/biens/index",
+ *     path="/api/biens/index/4",
  *     summary="liste des biens trouvés",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -552,13 +608,35 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/biens/store",
+ *     path="/api/biens/store",
  *     summary="déclarer bien",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Biens"},
+ * )
+ */
+
+
+/**
+ * @OA\POST(
+ *     path="/api/forget-password",
+ *     summary="reset password",
+ *     description="",
+ * @OA\Response(response="201", description="Created successfully")
+ *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
+ * )
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             example=
+  * {
+ *     "email": "hamadhyfall21@gmail.com"
+ * }
+ *         )
+ *     ),
+ *     tags={"Users"},
  * )
  */
 
@@ -591,7 +669,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/users/1/update",
+ *     path="/api/users/1/update",
  *     summary="Modification utilisateur",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -613,7 +691,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/users/archives",
+ *     path="/api/users/archives",
  *     summary="utilisateurs archives",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -626,7 +704,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/users/nonArchives",
+ *     path="/api/users/nonArchives",
  *     summary="utilisateurs non archives",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -639,7 +717,7 @@
 
 /**
  * @OA\PUT(
- *     path="http://localhost:8000/api/1/archive",
+ *     path="/api/1/archive",
  *     summary="archivage",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -652,7 +730,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/auth/logout",
+ *     path="/api/auth/logout",
  *     summary="déconnexion",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -665,7 +743,7 @@
 
 /**
  * @OA\GET(
- *     path="http://localhost:8000/api/users/index",
+ *     path="/api/users/index",
  *     summary="liste des utilisateurs",
  *     description="",
  * @OA\Response(response="200", description="OK")
@@ -678,7 +756,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/login",
+ *     path="/api/login",
  *     summary="authentification",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -689,8 +767,8 @@
  *         @OA\JsonContent(
  *             example=
   * {
- *     "email": "ba@gmail.com",
- *     "password": "@zerty123"
+ *     "email": "hamadhyfall21@gmail.com",
+ *     "password": "papafall21"
  * }
  *         )
  *     ),
@@ -701,7 +779,7 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/register",
+ *     path="/api/register",
  *     summary="inscription",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
@@ -712,10 +790,10 @@
  *         @OA\JsonContent(
  *             example=
   * {
- *     "name": "ba",
+ *     "name": "papa",
  *     "firstName": "mountaga",
- *     "phone": 709693363,
- *     "email": "ba@gmail.com",
+ *     "phone": 776854665,
+ *     "email": "hamadhyfall21@gmail.com",
  *     "password": "@zerty123",
  *     "confirmPassword": "@zerty123"
  * }

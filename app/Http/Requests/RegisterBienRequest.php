@@ -29,7 +29,7 @@ class RegisterBienRequest extends FormRequest
             'description'=>'required|string',
             'date'=>'required|date',
             'lieu'=>'required|string',
-            'image'=>'required|image|max:5000'
+            'image[]' => 'image|max:10000|mimes:jpeg,png,jpg',
         ];
     }
 
