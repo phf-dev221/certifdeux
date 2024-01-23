@@ -23,4 +23,9 @@ class Bien extends Model
         return $this->belongsToMany(Categorie::class, 'roles_id');
     }
 
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
+
 }

@@ -143,32 +143,44 @@ class BienController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBienRequest $request, Bien $bien)
+    public function update(Request $request, $id)
     {
-        // try {
+        try {
+            $bien = Bien::findOrFail($id);
 
-        $bien->libelle = $request->libelle;
-        $bien->description = $request->description;
-        $bien->date = $request->date;
-        $bien->lieu = $request->lieu;
-        if ($request->hasFile("image")) {
-            $bien->image = $this->storeImage($request->image);
+            if($bien->user_id===auth()->user()->id){
+            $bien->update($request->only(['libelle', 'description', 'date', 'lieu','categorie_id']));
+    
+            if ($request->hasFile('image')) {
+                $bien->images()->delete();
+                foreach ($request->file('image') as $file) {
+                    $images = new Image();
+                    $imagePath = $file->store('images', 'public');
+                    $images->image = $imagePath;
+                    $images->bien_id = $bien->id;
+                    $images->save();
+
+                }
+            }
+    
+            return response()->json([
+                'message' => "Bien mis à jour avec succès",
+                'bien' => $bien,
+                'images' => $bien->images,
+            ]);
+        }else{
+            return new Exception('vous n\'etes pas autorisé');
         }
-        $bien->save();
-
-        return response()->json([
-            'status_code' => 200,
-            'status_message' => 'Bien mis à jour avec succès',
-            'bien' => $bien,
-        ]);
-        // } catch (Exception $e) {
-        //     return response()->json([
-        //         'error' => $e->getMessage(),
-        //         'status_code' => 404, // Not Found
-        //         'status_message' => 'Bien non trouvé ou erreur lors de la mise à jour',
-        //     ]);
-        // }
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'status_code' => 500,
+                'status_message' => 'Erreur lors de la mise à jour du bien',
+                'image' => $bien->images
+            ]);
+        }
     }
+    
 
     /**
      * Remove the specified resource from storage.
