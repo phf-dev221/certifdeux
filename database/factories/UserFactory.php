@@ -23,9 +23,14 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $phoneNumber = '7'.fake()->unique()->numerify('########');
         return [
             'name' => fake()->name(),
+            'firstName' => fake()->name(),
+            "phone"=>$phoneNumber,
             'email' => fake()->unique()->safeEmail(),
+            'isArchived'=>0,
+            'role_id'=>2,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),

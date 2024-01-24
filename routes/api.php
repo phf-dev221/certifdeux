@@ -59,7 +59,6 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
 });
 
 Route::middleware('auth:api')->group(function () {
-    Route::post('biens/{bien}/update', [BienController::class, 'update']);
     Route::get('biens/bienUser', [BienController::class, 'bienUser']);
     Route::post('biens/{bien}/rendreBien', [BienController::class, 'rendreBien']);
 
@@ -83,6 +82,7 @@ Route::middleware('auth:api')->group(function () {
 
 /*routes pour biens*/
 Route::get('biens/index/{categorie}', [BienController::class, 'index']);
+Route::put('biens/{bien}/update', [BienController::class, 'update']);
 Route::get('biens/{bien}/show', [BienController::class, 'show']);
 
 /*routes pour pub */
