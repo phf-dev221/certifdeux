@@ -1,9 +1,10 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Demande;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -17,9 +18,9 @@ return new class extends Migration
             // $table->string('product_name');
             $table->string('token')->unique()->nullable();
             $table->integer('amount');
-            $table->integer('qty');
+            // $table->integer('qty');
             $table
-                ->foreignIdFor(User::class)
+                ->foreignIdFor(Demande::class)
                 ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')

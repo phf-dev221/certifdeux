@@ -138,7 +138,7 @@
                     <div class="col-md-1"></div>
                     <div class="col-sm-5 card">
                         <br>
-                        <h3 class="header-title">Validation de Commande</h3>
+                        <h3 class="header-title">Validation de Paiement</h3>
                         <form class="login-form" action="{{ route('payment.submit') }}" method="POST">
                             @csrf
                             <div class="form-group">

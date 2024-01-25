@@ -12,11 +12,11 @@ class Payment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'user_id',
-        'product_name',
+        'demande_id',
+        // 'product_name',
         'token',
         'amount',
-        'qty'
+        // 'qty'
     ];
 
     protected $table = 'payments';
