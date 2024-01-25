@@ -26,7 +26,7 @@ class UpdateRoleRequest extends FormRequest
     {
         return [
 
-            'nomRole'=>'alpha_spaces'
+            'nomRole'=>'required|string'
         ];
     }
 
@@ -42,7 +42,8 @@ class UpdateRoleRequest extends FormRequest
     public function messages(){
         return [
 
-            'contenu.alpha_spaces'=>'Format du nomRole incorrect',
+            'nomRole.string'=>'Format du nomRole incorrect',
+            'nomRole.required'=>"un nom de role est requis"
 
 
         ];

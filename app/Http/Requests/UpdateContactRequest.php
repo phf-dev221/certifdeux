@@ -25,9 +25,9 @@ class UpdateContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom'=>'regex:/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/',
-            'email'=>'email',
-            'message'=>'string'
+            'nom'=>'required|regex:/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/',
+            'email'=>'required|email',
+            'message'=>'required|string'
         ];
     }
 
@@ -42,9 +42,14 @@ class UpdateContactRequest extends FormRequest
     }
     public function messages(){
         return [
+            'nom.required'=>'le nom est requis',
             'message.string'=>'Format du message incorrect',
+            'message.required'=>'le message est requis',
             'nom.regex'=>'le format du nm est incorrect',
+            'email.required'=>'l\'email est requis',
             'email.email'=>"format email incorrect",
+
+            
 
         ];
     }

@@ -26,7 +26,7 @@ class UpdatePubliciteRequest extends FormRequest
     {
         return [
 
-            'media' => 'mimes:jpeg,png,gif,mp4,pdf,docx',
+            'media' => 'required|mimes:jpeg,png,gif,mp4,pdf,docx',
         ];
     }
 
@@ -41,7 +41,8 @@ class UpdatePubliciteRequest extends FormRequest
     }
     public function messages(){
         return [
-            'nom.mimes'=>'Format du media incorrect',
+            'media.mimes'=>'Format du media incorrect',
+            'media.required'=>'un media est requis'
         ];
     }
 }

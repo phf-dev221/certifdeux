@@ -26,7 +26,7 @@ class RegistertemoignageRequest extends FormRequest
     {
         return [
 
-            'contenu'=>'string'
+            'contenu'=>'required|string'
         ];
     }
 
@@ -42,8 +42,7 @@ class RegistertemoignageRequest extends FormRequest
     public function messages(){
         return [
             'contenu.string'=>'Format du contenu incorrect',
-
-
+            'contenu.required'=>'un contenu est requis'
         ];
     }
 }

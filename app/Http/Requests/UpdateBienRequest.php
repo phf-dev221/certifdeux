@@ -25,11 +25,11 @@ class UpdateBienRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'libelle' => 'string',
-            'description' => 'string',
-            'date' => 'date',
-            'lieu' => 'regex:/string',
-            'image[]' => 'image|max:10000|mimes:jpeg,png,jpg',
+            'libelle' => 'required|string',
+            'description' => 'required|string',
+            'date' => 'required|date',
+            'lieu' => 'required|regex:/string',
+            'image[]' => 'sometimmes|image|max:10000|mimes:jpeg,png,jpg',
         ];
     }
 
@@ -46,12 +46,16 @@ class UpdateBienRequest extends FormRequest
     public function messages()
     {
         return [
-            'libelle.string' => 'Format du libellé incorrect',
-            'description.string' => 'la description a un format incorrect',
-            'date.date' => 'Format date incorrect',
-            'lieu.string' => 'Format lieu incorrect',
-            'image.image' => "le format de l'image est incorrect",
-            'image.max' => 'la taille de l\'image est trop grande'
+            'libelle.required'=>'le libellé est requis',
+            'description.required'=>'la description est requise',
+            'libelle.string'=>'Format du libellé incorrect',
+            'description.string'=>'la description a un format incorrect',
+            'date.required'=>'la date est requise',
+            'date.date'=>'Format date incorrect',
+            'lieu.required'=>'le lieu est requis',
+            'lieu.string'=>'Format lieu incorrect',
+            'image.image'=>"le format de l'image est incorrect",
+            'image.max'=>'la taille de l\'image est trop grande'
 
         ];
     }

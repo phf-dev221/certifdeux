@@ -25,9 +25,9 @@ class UpdateDemandeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'details'=>'string',
-            'email'=>'unique:users,email|email',
-            'duree'=>'number'
+            'details'=>'required|string',
+            'email'=>'required|unique:users,email|email',
+            'duree'=>'required|number'
         ];
     }
 
@@ -42,9 +42,11 @@ class UpdateDemandeRequest extends FormRequest
     }
     public function messages(){
         return [
+            'details.required'=>'le detail est requis',
             'details.string'=>'Format du detail incorrect',
+            'duree.required'=>'la durée est requise',
             'duree.number'=>'la durée a un format incorrect',
-            'email.unique'=>'l\'email existe déja',
+            'email.required'=>'l\'email est requis',
             'email.email'=>"format email incorrect",
 
         ];

@@ -26,7 +26,7 @@ class UpdateCategorieRequest extends FormRequest
     {
         return [
 
-            'nom' => 'alpha_spaces',
+            'nom' => 'required|string',
         ];
     }
 
@@ -42,9 +42,8 @@ class UpdateCategorieRequest extends FormRequest
     public function messages(){
         return [
 
-            'nom.alpha_sapces'=>'Format du nom de catégorie incorrect',
-
-
+            'nom.string'=>'Format du nom de catégorie incorrect',
+            'nom.required'=>'le nom est requis'
         ];
     }
 }
