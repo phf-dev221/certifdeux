@@ -147,6 +147,7 @@ class BienController extends Controller
      */
     public function update(UpdateBienRequest $request, $id)
     {
+       
         try {
             $bien = Bien::findOrFail($id);
 

@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BienController;
@@ -59,7 +58,7 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
 
 Route::middleware('auth:api')->group(function () {
     Route::get('biens/bienUser', [BienController::class, 'bienUser']);
-    Route::put('biens/{bien}/update', [BienController::class, 'update']);
+    Route::post('biens/{bien}/update', [BienController::class, 'update']);
     Route::post('biens/{bien}/rendreBien', [BienController::class, 'rendreBien']);
 
     Route::post('demandes/store', [DemandeController::class, 'store']);
@@ -77,7 +76,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('users/{user}/update', [AuthController::class, 'update']);
     Route::get('users/{user}/show', [AuthController::class, 'show']);
     Route::post('users/whatsapp/{user}', [AuthController::class, 'sendWhatsapp'])->name('whatsapp');
-    Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 });
 
 /*routes pour biens*/
@@ -112,4 +110,5 @@ Route::post('news/store', [SouscrisController::class, 'store']);
 // Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 

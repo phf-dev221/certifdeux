@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\User;
+use App\Mail\PayeMail;
 use App\Models\Demande;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\UpdateDemandeRequest;
 use App\Http\Requests\RegisterDemandeRequest;
 
@@ -35,18 +36,23 @@ class DemandeController extends Controller
 
     public function accept(Demande $demande)
     {
-        try {
+
+        $user = User::where('id',$demande->user_id)->first();
+        $number = $demande->id;
+        // try {
             $demande->update([
                 'etat' => 'accepte'
             ]);
+            
 
-            return response()->json([
-                'status_code' => 200,
-                'status_message' => "Vous avez accepté cette demande"
-            ]);
-        } catch (Exception $e) {
-            return response()->json($e);
-        }
+            Mail::to($user->email)->send(new PayeMail($number));
+            // };
+            // return view('payement',compact('numero'));
+            // Mail::to($user->email)->send(new PayeMail());   
+
+        // } catch (Exception $e) {
+        //     return response()->json($e);
+        // }
     }
 
     public function refuse(Demande $demande)

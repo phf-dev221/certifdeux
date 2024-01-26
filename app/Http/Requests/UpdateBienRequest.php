@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Request;
 
 
 class UpdateBienRequest extends FormRequest
@@ -22,14 +23,15 @@ class UpdateBienRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
+    public function rules(Request $request): array
+    { 
         return [
-            'libelle' => 'required|string',
-            'description' => 'required|string',
-            'date' => 'required|date',
-            'lieu' => 'required|regex:/string',
-            'image[]' => 'sometimmes|image|max:10000|mimes:jpeg,png,jpg',
+            'libelle'=>'required|string',
+            'description'=>'required|string',
+            'date'=>'required|date',
+            'lieu'=>'required|string',
+            'categorie_id'=>'required|integer',
+            'image[]' => 'sometimes|image|max:10000|mimes:jpeg,png,jpg',
         ];
     }
 
@@ -50,9 +52,11 @@ class UpdateBienRequest extends FormRequest
             'description.required'=>'la description est requise',
             'libelle.string'=>'Format du libellé incorrect',
             'description.string'=>'la description a un format incorrect',
-            'date.required'=>'la date est requise',
+            'date.required'=>'la date est requizze',
             'date.date'=>'Format date incorrect',
             'lieu.required'=>'le lieu est requis',
+            'categorie_id.required'=>'la categorie est requis',
+            'lieu.integer'=>'le type de categorie est au mauvais format',
             'lieu.string'=>'Format lieu incorrect',
             'image.image'=>"le format de l'image est incorrect",
             'image.max'=>'la taille de l\'image est trop grande'

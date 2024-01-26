@@ -28,6 +28,7 @@ class RegisterUserRequest extends FormRequest
             'description'=>'required|string',
             'date'=>'required|date',
             'lieu'=>'required|regex:/string',
+            'categorie_id'=>'required|integer',
             'image'=>'required|image|max:5000'
         ];
     }
