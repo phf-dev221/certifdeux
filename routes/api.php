@@ -36,13 +36,15 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
 
     /*catégories de biens*/
     Route::post('categories/{categorie}/update', [CategorieController::class, 'update']);
-    Route::delete('categories/{categorie}/destroy', [CategorieController::class, 'destroy']);
+    Route::post('categories/{categorie}/destroy', [CategorieController::class, 'destroy']);
     Route::post('categories/store', [CategorieController::class, 'store']);
     Route::get('categories/index', [CategorieController::class, 'index']);
 
     /*contacts*/
     Route::get('contacts/index', [ContactController::class, 'index']);
     Route::get('contacts/{contact}/show', [ContactController::class, 'show']);
+    Route::delete('contacts/{contact}/destroy', [ContactController::class, 'destroy']);
+
 
     /*temoignages*/
     Route::post('temoignages/{temoignage}/accept', [TemoignageController::class, 'accept']);
@@ -88,7 +90,6 @@ Route::get('pubs/{publicite}/show', [PubliciteController::class, 'show']);
 
 /*routes pour contact*/
 // Route::post('contacts/{contact}/update', [ContactController::class, 'update']);
-// Route::delete('contacts/{contact}/destroy', [ContactController::class, 'destroy']);
 
 /*routes pour temoignage*/
 Route::get('temoignages/index', [TemoignageController::class, 'index']);

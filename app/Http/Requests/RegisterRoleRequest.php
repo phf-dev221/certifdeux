@@ -26,7 +26,7 @@ class RegisterRoleRequest extends FormRequest
     {
         return [
 
-            'nomRole'=>'required|alpha_spaces'
+            'nomRole'=>'required|string'
         ];
     }
 
@@ -42,7 +42,7 @@ class RegisterRoleRequest extends FormRequest
     public function messages(){
         return [
             'nomRole.required'=>'le nomRole est requis',
-            'contenu.alpha_spaces'=>'Format du nomRole incorrect',
+            'contenu.string'=>'Format du nomRole incorrect',
 
 
         ];

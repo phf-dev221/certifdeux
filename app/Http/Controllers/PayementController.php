@@ -115,8 +115,9 @@ class PayementController extends Controller
         $demande = Demande::where('id',$payment->demande_id);
 
         $user = User::where('id',$demande->user_id)->first();
+        // return 'paiement reussi'
 
-         return view('facture',compact('user','payment'));
+        return view('facture',compact('user','payment'));
         // return back();
     }
 

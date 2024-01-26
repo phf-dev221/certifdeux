@@ -28,6 +28,7 @@ class BienController extends Controller
             foreach ($biens as $bien) {
                 $firstimage = Image::where('bien_id', $bien->id)->first();
                 $result[] = [
+                    'categorie'=>$categorie->nom,
                     'bien' => $bien,
                     'premiere_image' => $firstimage,
                 ];
@@ -60,7 +61,7 @@ class BienController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request)
+    public function store(RegisterBienRequest $request)
     {
         try {
             $bien = new Bien();
@@ -101,7 +102,7 @@ class BienController extends Controller
                 'error' => $e->getMessage(),
                 'status_code' => 500,
                 'status_message' => 'Erreur lors de l\'ajout du bien',
-                'image' => $imagesData
+                // 'image' => $imagesData
             ]);
         }
     }
