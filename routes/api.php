@@ -17,41 +17,41 @@ use App\Http\Controllers\ForgotPasswordController;
 Route::middleware(['auth:api', 'admin'])->group(function () {
     /**biens */
     Route::post('biens/store', [BienController::class, 'store']);
-    Route::delete('biens/{bien}/destroy', [BienController::class, 'destroy']);
-    Route::post('biens/{bien}/accepte', [BienController::class, 'acceptBien']);
-    Route::post('biens/{bien}/refuse', [BienController::class, 'refuseBien']);
+    Route::delete('biens/destroy/{bien}', [BienController::class, 'destroy']);
+    Route::post('biens/accepte/{bien}', [BienController::class, 'acceptBien']);
+    Route::post('biens/refuse/{bien}', [BienController::class, 'refuseBien']);
 
     /*demandes publicites*/
-    Route::post('demandes/{demande}/accept', [DemandeController::class, 'accept']);
-    Route::post('demandes/{demande}/refuse', [DemandeController::class, 'refuse']);
+    Route::post('demandes/accept/{demande}', [DemandeController::class, 'accept']);
+    Route::post('demandes/refuse/{demande}', [DemandeController::class, 'refuse']);
     Route::get('demandes/acceptedDemande', [DemandeController::class, 'acceptedDemande']);
     Route::get('demandes/refusedDemande', [DemandeController::class, 'refusedDemande']);
     Route::get('demandes/index', [DemandeController::class, 'index']);
 
     /*publicités*/
-    Route::post('pubs/{publicite}/update', [PubliciteController::class, 'update']);
-    Route::post('pubs/{publicite}/destroy', [PubliciteController::class, 'destroy']);
-    Route::post('pubs/{publicite}/invalide', [PubliciteController::class, 'invalidPub']);
+    Route::post('pubs/update/{publicite}', [PubliciteController::class, 'update']);
+    Route::post('pubs/destroy/{publicite}', [PubliciteController::class, 'destroy']);
+    Route::post('pubs/invalide/{publicite}', [PubliciteController::class, 'invalidPub']);
     Route::post('pubs/store', [PubliciteController::class, 'store']);
 
     /*catégories de biens*/
-    Route::post('categories/{categorie}/update', [CategorieController::class, 'update']);
-    Route::post('categories/{categorie}/destroy', [CategorieController::class, 'destroy']);
+    Route::post('categories/update/{categorie}', [CategorieController::class, 'update']);
+    Route::post('categories/destroy/{categorie}', [CategorieController::class, 'destroy']);
     Route::post('categories/store', [CategorieController::class, 'store']);
     Route::get('categories/index', [CategorieController::class, 'index']);
 
     /*contacts*/
     Route::get('contacts/index', [ContactController::class, 'index']);
-    Route::get('contacts/{contact}/show', [ContactController::class, 'show']);
-    Route::delete('contacts/{contact}/destroy', [ContactController::class, 'destroy']);
+    Route::get('contacts/show/{contact}', [ContactController::class, 'show']);
+    Route::delete('contacts/destroy/{contact}', [ContactController::class, 'destroy']);
 
 
     /*temoignages*/
-    Route::post('temoignages/{temoignage}/accept', [TemoignageController::class, 'accept']);
+    Route::post('temoignages/accept/{temoignage}', [TemoignageController::class, 'accept']);
 
     /*utilisateurs*/
     Route::get('users/index', [AuthController::class, 'index']);
-    Route::put('{user}/archive', [AuthController::class, 'archive']);
+    Route::put('/archive{user}', [AuthController::class, 'archive']);
     Route::get('users/archives', [AuthController::class, 'userArchive']);
     Route::get('users/nonArchives', [AuthController::class, 'userNonArchive']);
 
@@ -60,13 +60,13 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
 
 Route::middleware('auth:api')->group(function () {
     Route::get('biens/bienUser', [BienController::class, 'bienUser']);
-    Route::post('biens/{bien}/update', [BienController::class, 'update']);
-    Route::post('biens/{bien}/rendreBien', [BienController::class, 'rendreBien']);
+    Route::post('biens/update/{bien}', [BienController::class, 'update']);
+    Route::post('biens/rendreBien/{bien}', [BienController::class, 'rendreBien']);
 
     Route::post('demandes/store', [DemandeController::class, 'store']);
-    Route::post('demandes/{demande}/update', [DemandeController::class, 'update']);
-    Route::post('demandes/{demande}/show', [DemandeController::class, 'show']);
-    Route::delete('demandes/{demande}/destroy', [DemandeController::class, 'destroy']);
+    Route::post('demandes/update/{demande}', [DemandeController::class, 'update']);
+    Route::post('demandes/show/{demande}', [DemandeController::class, 'show']);
+    Route::delete('demandes/destroy/{demande}', [DemandeController::class, 'destroy']);
 
     Route::post('contacts/store', [ContactController::class, 'store']);
 
@@ -75,29 +75,29 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
-    Route::post('users/{user}/update', [AuthController::class, 'update']);
-    Route::get('users/{user}/show', [AuthController::class, 'show']);
+    Route::post('users/update/{user}', [AuthController::class, 'update']);
+    Route::get('users/show/{user}', [AuthController::class, 'show']);
     Route::post('users/whatsapp/{user}', [AuthController::class, 'sendWhatsapp'])->name('whatsapp');
 });
 
 /*routes pour biens*/
 Route::get('biens/index/{categorie}', [BienController::class, 'index']);
-Route::get('biens/{bien}/show', [BienController::class, 'show']);
+Route::get('biens/show/{bien}', [BienController::class, 'show']);
 
 /*routes pour pub */
 Route::get('pubs/index', [PubliciteController::class, 'index']);
-Route::get('pubs/{publicite}/show', [PubliciteController::class, 'show']);
+Route::get('pubs/show/{publicite}', [PubliciteController::class, 'show']);
 
 /*routes pour contact*/
 // Route::post('contacts/{contact}/update', [ContactController::class, 'update']);
 
 /*routes pour temoignage*/
 Route::get('temoignages/index', [TemoignageController::class, 'index']);
-Route::get('temoignages/{temoignage}/show', [TemoignageController::class, 'show']);
+Route::get('temoignages/show/{temoignage}', [TemoignageController::class, 'show']);
 
 /**routes pour les roles */
 Route::post('roles/store', [RoleController::class, 'store']);
-Route::post('roles/{role}/update', [RoleController::class, 'update']);
+Route::post('roles/update/{role}', [RoleController::class, 'update']);
 
 /*routes pour les utilisateurs*/
 Route::post('register', [AuthController::class, 'register']);

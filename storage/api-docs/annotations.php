@@ -27,7 +27,7 @@
 
 /**
  * @OA\Consumes({
- *     "application/json"
+ *     "multipart/form-data"
  * })
  */
 
@@ -38,16 +38,22 @@
  *     summary="Souscris a un newslatter",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "email": "test@gmail.com"
- * }
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="email", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"Newsletter"},
  * )
@@ -60,17 +66,23 @@
  *     summary="Creer un newsletter",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "libelle": "newsletter de EUREKA",
- *     "contenu": "Nous sommes heureux de vous annoncez que notre plateforme vient d'etre marquée comme numéro un mondial"
- * }
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="libelle", type="string"),
+ *                     @OA\Property(property="contenu", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"Newsletter"},
  * )
@@ -83,16 +95,22 @@
  *     summary="creer un role",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "nomRole": "moniteur"
- * }
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="nomRole", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"Role"},
  * )
@@ -101,10 +119,15 @@
 
 /**
  * @OA\POST(
- *     path="http://localhost:8000/api/roles/3/update",
+ *     path="http://localhost:8000/api/roles/update/{role}",
  *     summary="Modifier un role",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="role", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Role"},
@@ -113,11 +136,16 @@
 
 
 /**
- * @OA\POST(
- *     path="/api/demandes/2/destroy",
+ * @OA\DELETE(
+ *     path="/api/demandes/destroy/{demande}",
  *     summary="supprimer une demande",
  *     description="",
- * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="204", description="Deleted successfully")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ * @OA\Response(response="404", description="Not Found")
+ *     @OA\Parameter(in="path", name="demande", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Demande publicité"},
@@ -127,10 +155,15 @@
 
 /**
  * @OA\POST(
- *     path="/api/demandes/3/refuse",
+ *     path="/api/demandes/refuse/{demande}",
  *     summary="Refuser une demande",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="demande", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Demande publicité"},
@@ -140,10 +173,15 @@
 
 /**
  * @OA\POST(
- *     path="/api/demandes/5/accept",
+ *     path="/api/demandes/accept/{demande}",
  *     summary="Accepter une demande",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="demande", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Demande publicité"},
@@ -157,6 +195,8 @@
  *     summary="demandes refusées",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Demande publicité"},
@@ -170,6 +210,8 @@
  *     summary="demandes acceptées",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Demande publicité"},
@@ -183,6 +225,8 @@
  *     summary="demandes en attente",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Demande publicité"},
@@ -192,18 +236,30 @@
 
 /**
  * @OA\POST(
- *     path="/api/demandes/1/update",
+ *     path="/api/demandes/update/{demande}",
  *     summary="Modifier une demande",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="demande", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {}
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="duree", type="integer"),
+ *                     @OA\Property(property="details", type="string"),
+ *                     @OA\Property(property="email", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"Demande publicité"},
  * )
@@ -216,18 +272,24 @@
  *     summary="creer une demande",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "duree": 1,
- *     "details": "details",
- *     "email": "pro@gmail.com"
- * }
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="duree", type="integer"),
+ *                     @OA\Property(property="details", type="string"),
+ *                     @OA\Property(property="email", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"Demande publicité"},
  * )
@@ -240,16 +302,22 @@
  *     summary="Creer une categorie",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "nom": "argent"
- * }
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="nom", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"categorie"},
  * )
@@ -262,6 +330,8 @@
  *     summary="Liste des categories",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"categorie"},
@@ -271,20 +341,28 @@
 
 /**
  * @OA\POST(
- *     path="/api/categories/1/update",
+ *     path="/api/categories/update/{categorie}",
  *     summary="Modifier une categorie",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="categorie", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "nom": "argent"
- * }
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="nom", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"categorie"},
  * )
@@ -292,11 +370,16 @@
 
 
 /**
- * @OA\DELETE(
- *     path="/api/categories/1/destroy",
+ * @OA\POST(
+ *     path="/api/categories/destroy/{categorie}",
  *     summary="Supprimer une categorie",
  *     description="",
- * @OA\Response(response="204", description="Deleted successfully")
+ * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="categorie", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"categorie"},
@@ -310,16 +393,22 @@
  *     summary="Enregistrer témoignage",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "contenu": "votre site est extra ordinaire"
- * }
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="contenu", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"temoignage"},
  * )
@@ -332,6 +421,8 @@
  *     summary="Voir tous les temoignages",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"temoignage"},
@@ -341,10 +432,14 @@
 
 /**
  * @OA\GET(
- *     path="/api/temoignages/1/show",
+ *     path="/api/temoignages/show/{temoignage}",
  *     summary="Voir un témoignage",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
+ *     @OA\Parameter(in="path", name="temoignage", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"temoignage"},
@@ -354,10 +449,15 @@
 
 /**
  * @OA\POST(
- *     path="/api/temoignages/1/accept",
+ *     path="/api/temoignages/accep/{temoignage}",
  *     summary="Accepter un témoignage",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="temoignage", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"temoignage"},
@@ -367,10 +467,12 @@
 
 /**
  * @OA\GET(
- *     path="/api/contacts/index",
+ *     path="http://127.0.0.1:8002/api/contacts/index",
  *     summary="Liste des contacts",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"contact"},
@@ -384,18 +486,24 @@
  *     summary="Enregistré contact",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "nom": "tamba",
- *     "email": "tamba@gmail.com",
- *     "message": "bonjour comment va "
- * }
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="nom", type="string"),
+ *                     @OA\Property(property="email", type="string"),
+ *                     @OA\Property(property="message", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"contact"},
  * )
@@ -404,32 +512,15 @@
 
 /**
  * @OA\POST(
- *     path="/api/contacts/1/update",
- *     summary="Modifier contact",
- *     description="",
- * @OA\Response(response="201", description="Created successfully")
- *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
- * )
- *     @OA\RequestBody(
- *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "nom": "mamba"
- * }
- *         )
- *     ),
- *     tags={"contact"},
- * )
- */
-
-
-/**
- * @OA\DELETE(
- *     path="/api/contacts/1/destroy",
+ *     path="/api/contacts/destroy/{contact}",
  *     summary="Supprimer un contact",
  *     description="",
- * @OA\Response(response="204", description="Deleted successfully")
+ * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="contact", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"contact"},
@@ -439,10 +530,14 @@
 
 /**
  * @OA\GET(
- *     path="/api/contacts/1/show",
+ *     path="/api/contacts/show/{contact}",
  *     summary="voir un contact",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
+ *     @OA\Parameter(in="path", name="contact", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"contact"},
@@ -452,10 +547,15 @@
 
 /**
  * @OA\POST(
- *     path="/api/pubs/1/invalide",
+ *     path="/api/pubs/invalide/{publicite}",
  *     summary="invalider une publicité",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="publicite", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Publicités"},
@@ -465,10 +565,14 @@
 
 /**
  * @OA\GET(
- *     path="/api/pubs/1/show",
+ *     path="/api/pubs/show/{publicite}",
  *     summary="voir une publicité",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
+ *     @OA\Parameter(in="path", name="publicite", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Publicités"},
@@ -482,6 +586,8 @@
  *     summary="liste des publicités",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Publicités"},
@@ -495,8 +601,24 @@
  *     summary="Creer une publicité",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="media", type="string", format="binary"),
+ *                     @OA\Property(property="demande_id", type="string"),
+ *                 },
+ *             ),
+ *         ),
+ *     ),
  *     tags={"Publicités"},
  * )
  */
@@ -504,10 +626,15 @@
 
 /**
  * @OA\POST(
- *     path="/api/biens/22/rendreBien",
+ *     path="/api/biens/rendreBien/{bien}",
  *     summary="Mettre un bien comme rendu",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="bien", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Biens"},
@@ -521,6 +648,8 @@
  *     summary="Biens d'un utilisateur",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Biens"},
@@ -530,10 +659,15 @@
 
 /**
  * @OA\POST(
- *     path="/api/biens/1/refuse",
+ *     path="/api/biens/refuse/{bien}",
  *     summary="Refuser un bien",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="bien", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Biens"},
@@ -543,10 +677,15 @@
 
 /**
  * @OA\POST(
- *     path="/api/biens/1/accepte",
+ *     path="/api/biens/accepte/{bien}",
  *     summary="Accepter un bien",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="bien", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Biens"},
@@ -556,10 +695,15 @@
 
 /**
  * @OA\DELETE(
- *     path="/api/biens/1/destroy",
+ *     path="/api/biens/destroy/{bien}",
  *     summary="Supprimer un bien",
  *     description="",
  * @OA\Response(response="204", description="Deleted successfully")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ * @OA\Response(response="404", description="Not Found")
+ *     @OA\Parameter(in="path", name="bien", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Biens"},
@@ -569,12 +713,34 @@
 
 /**
  * @OA\POST(
- *     path="/api/biens/25/update",
+ *     path="/api/biens/update/{bien}",
  *     summary="Modifier un bien",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="bien", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="libelle", type="string"),
+ *                     @OA\Property(property="date", type="string"),
+ *                     @OA\Property(property="description", type="string"),
+ *                     @OA\Property(property="lieu", type="string"),
+ *                     @OA\Property(property="categorie_id", type="string"),
+ *                     @OA\Property(property="image[]", type="string", format="binary"),
+ *                 },
+ *             ),
+ *         ),
+ *     ),
  *     tags={"Biens"},
  * )
  */
@@ -582,10 +748,14 @@
 
 /**
  * @OA\GET(
- *     path="/api/biens/2/show",
+ *     path="/api/biens/show/{bien}",
  *     summary="récupérer un bien",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
+ *     @OA\Parameter(in="path", name="bien", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Biens"},
@@ -595,10 +765,14 @@
 
 /**
  * @OA\GET(
- *     path="/api/biens/index/4",
+ *     path="/api/biens/index/{categorie}",
  *     summary="liste des biens trouvés",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
+ *     @OA\Parameter(in="path", name="categorie", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Biens"},
@@ -612,8 +786,28 @@
  *     summary="déclarer bien",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="libelle", type="string"),
+ *                     @OA\Property(property="lieu", type="string"),
+ *                     @OA\Property(property="description", type="string"),
+ *                     @OA\Property(property="date", type="string"),
+ *                     @OA\Property(property="image[]", type="string", format="binary"),
+ *                     @OA\Property(property="categorie_id", type="string"),
+ *                 },
+ *             ),
+ *         ),
+ *     ),
  *     tags={"Biens"},
  * )
  */
@@ -625,16 +819,22 @@
  *     summary="reset password",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "email": "hamadhyfall21@gmail.com"
- * }
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="email", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"Users"},
  * )
@@ -643,10 +843,13 @@
 
 /**
  * @OA\POST(
- *     path="/api/users/whatsapp/4",
+ *     path="/api/users/whatsapp/{user}",
  *     summary="whatsapp",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Users"},
@@ -660,6 +863,8 @@
  *     summary="chatify",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Users"},
@@ -669,20 +874,30 @@
 
 /**
  * @OA\POST(
- *     path="/api/users/1/update",
+ *     path="/api/users/update/{user}",
  *     summary="Modification utilisateur",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
+ *     @OA\Parameter(in="path", name="user", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "name": "binta"
- * }
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="name", type="string"),
+ *                     @OA\Property(property="phone", type="integer"),
+ *                     @OA\Property(property="firstName", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"Users"},
  * )
@@ -695,6 +910,8 @@
  *     summary="utilisateurs archives",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Users"},
@@ -708,6 +925,8 @@
  *     summary="utilisateurs non archives",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Users"},
@@ -717,10 +936,14 @@
 
 /**
  * @OA\PUT(
- *     path="/api/1/archive",
+ *     path="/api/archive/{user}",
  *     summary="archivage",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
+ *     @OA\Parameter(in="path", name="user", required=false, @OA\Schema(type="string")
+ * )
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Users"},
@@ -730,10 +953,13 @@
 
 /**
  * @OA\POST(
- *     path="/api/auth/logout",
+ *     path="/api/logout",
  *     summary="déconnexion",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Users"},
@@ -747,6 +973,8 @@
  *     summary="liste des utilisateurs",
  *     description="",
  * @OA\Response(response="200", description="OK")
+ * @OA\Response(response="404", description="Not Found")
+ * @OA\Response(response="500", description="Internal Server Error")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     tags={"Users"},
@@ -760,17 +988,23 @@
  *     summary="authentification",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "email": "hamadhyfall21@gmail.com",
- *     "password": "papafall21"
- * }
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="email", type="string"),
+ *                     @OA\Property(property="password", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"Users"},
  * )
@@ -783,21 +1017,27 @@
  *     summary="inscription",
  *     description="",
  * @OA\Response(response="201", description="Created successfully")
+ * @OA\Response(response="400", description="Bad Request")
+ * @OA\Response(response="401", description="Unauthenticated")
+ * @OA\Response(response="403", description="Unauthorize")
  *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
  * )
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(
- *             example=
-  * {
- *     "name": "papa",
- *     "firstName": "mountaga",
- *     "phone": 776854665,
- *     "email": "hamadhyfall21@gmail.com",
- *     "password": "@zerty123",
- *     "confirmPassword": "@zerty123"
- * }
- *         )
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 properties={
+ *                     @OA\Property(property="name", type="string"),
+ *                     @OA\Property(property="firstName", type="string"),
+ *                     @OA\Property(property="phone", type="integer"),
+ *                     @OA\Property(property="email", type="string"),
+ *                     @OA\Property(property="password", type="string"),
+ *                     @OA\Property(property="confirmPassword", type="string"),
+ *                 },
+ *             ),
+ *         ),
  *     ),
  *     tags={"Users"},
  * )
